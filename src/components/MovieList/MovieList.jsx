@@ -1,12 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import s from "./MovieList.module.css"
 
-const MovieList = ({movies}) => {
+
+const MovieList = ({ movies, onMovieClick }) => {
+    const location = useLocation();
   return (
-      <div >
+      <div className={s.div} >
           {movies.map((movie) => {
-              return <div key={movie.id}>
-                  <Link to={`/movies/${movie.id}`}>
+              return <div className={s.cont}  key={movie.id}>
+                  <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}` } width={150}
+          alt="poster"/>
+                  <Link className={s.text} to={`/movies/${movie.id}`} state={{from: location.pathname + location.search}}>
                       {movie.title}
                   </Link>
               </div>
