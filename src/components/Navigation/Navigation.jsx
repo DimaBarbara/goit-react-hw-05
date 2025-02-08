@@ -1,31 +1,18 @@
-import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import s from "./Navigation.module.css"
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import s from './Navigation.module.css';
+import clsx from 'clsx';
+
+const buildLinkClass = ({ isActive }) => {
+  return clsx(s.link, isActive && s.active);
+};
 
 const Navigation = () => {
-  const [value, setValue] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSearchParams({ query: value });
-  };
-
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        placeholder="Search for a movie..."
-        className={s.input}
-      />
-      <button type="submit" className={s.button}>Search</button>
-    </form>
+    <nav className={s.nav}>
+      <NavLink className={buildLinkClass} to='/'>HomePage</NavLink>
+      <NavLink className={buildLinkClass} to='/movies'>MoviesPage</NavLink>
+    </nav>
   );
 };
 

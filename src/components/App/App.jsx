@@ -1,29 +1,23 @@
-import React from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
-import HomePage from '../../pages/HomePage/HomePage'
-import MoviesPage from '../../pages/MoviesPage/MoviesPage'
-import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage'
-import MovieDetailsPage from '../../pages/MovieDetailsPage/MovieDetailsPage'
-import MovieCast from '../MovieCast/MovieCast'
-import MovieReview from '../MovieReviews/MovieReviews'
-import s from './App.module.css'
-import clsx from 'clsx'
-
-const buildLinkClass = ({ isActive }) => {
-  return clsx(s.link, isActive && s.active);
-};
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
+const MoviesPage = lazy(() => import('../../pages/MoviesPage/MoviesPage'));
+const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
+const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage/MovieDetailsPage'));
+const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
+const MovieReview = lazy(() => import('../MovieReviews/MovieReviews'));
+const Navigation = lazy(() => import('../Navigation/Navigation'));
+import s from './App.module.css';
 
 const App = () => {
   return (
     <div>
       <div className= {s.div}>
-        <nav className={s.nav}>
-              <NavLink className={buildLinkClass} to='/'>HomePage</NavLink>
-              <NavLink className={buildLinkClass} to='/movies'>MoviesPage </NavLink>
-          </nav>
+        <Navigation/>
       </div>
-          
-          <Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/movies' element={<MoviesPage />} />
         <Route path='/movies/:movieId' element={<MovieDetailsPage />} >
@@ -31,7 +25,10 @@ const App = () => {
           <Route path='reviews' element={<MovieReview/> } />
         </Route>
               <Route path='*' element={<NotFoundPage/> } />
-          </Routes>
+        </Routes>
+      </Suspense>
+          
+      
     </div>
   )
 }

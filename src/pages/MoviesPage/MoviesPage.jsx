@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import Navigation from '../../components/Navigation/Navigation';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import MovieList from '../../components/MovieList/MovieList';
 import s from "./MoviesPage.module.css"
 
@@ -37,7 +37,7 @@ const MoviesPage = () => {
   return (
     <div className={s.container}>
       <h1 className={s.title}>Movie Search</h1>
-      <Navigation />
+      <SearchBar />
       <MovieList movies={movies} />
     </div>
   );
